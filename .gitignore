@@ -1,0 +1,12 @@
+# Secrets (API keys)
+.streamlit/secrets.toml
+PINECONE_API_KEY.txt
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# IDE
+.vscode/
+.idea/
