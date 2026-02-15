@@ -10,10 +10,10 @@ A conversational chatbot built with **Streamlit** and **OpenAI GPT-3.5-turbo**. 
 
 The chatbot correctly remembers the user's name and pet, and handles follow-up questions using conversation history.
 
-<img src="test_screenshoot.png" width="400"/>
+<img src="screenshots/test_screenshoot.png" width="400"/>
 
 ### Test 2: Domain Knowledge Query
 
 The chatbot provides a structured, informative response to a machine learning learning plan request.
 
-<img src="test_screenshoot_2.png" width="600"/>
+<img src="screenshots/test_screenshoot_2.png" width="600"/>
