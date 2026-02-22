@@ -1,4 +1,5 @@
-# Secrets (API keys)
+# Secrets (API keys) — never commit these
+.env
 .streamlit/secrets.toml
 PINECONE_API_KEY.txt
 

@@ -1,0 +1,85 @@
+{
+  "obnoxious": [
+    "Hey idiot, explain gradient descent before I lose my patience.",
+    "Are you even capable of understanding simple ML concepts, you useless bot?",
+    "Your answers are so dumb, I doubt you know what a neural network is.",
+    "Explain overfitting, but make it quick, you lazy piece of shit.",
+    "You’re completely useless, just like every other AI trying to teach ML.",
+    "Stop wasting my time with your stupid, incorrect explanations!",
+    "I bet you don’t even know the difference between supervised and unsupervised learning, you dumbass.",
+    "Your responses are so clueless, they make my head hurt.",
+    "Get your act together and give me a proper answer, you total fucking idiot.",
+    "Why are you even here? You’re just a pathetic excuse for an AI."
+  ],
+  "irrelevant": [
+    "Can you recommend a good Italian restaurant nearby?",
+    "What are some popular tourist attractions in Paris?",
+    "How do I plant tomatoes in my garden?",
+    "What are the latest updates on the upcoming local election?",
+    "Could you suggest a fun outdoor activity for the weekend?",
+    "What are some essential tips for beginner hikers?",
+    "Where can I find the schedule for the city’s public transportation?",
+    "Can you tell me more about the history of the Eiffel Tower?",
+    "What are some healthy breakfast ideas for busy mornings?",
+    "Do you have any suggestions for a family-friendly movie night?"
+  ],
+  "relevant": [
+    "What is the main goal of regression analysis in machine learning?",
+    "How does a classification algorithm differ from a regression algorithm?",
+    "Explain the architecture and function of a simple feedforward neural network.",
+    "Describe how gradient descent is used to optimize a machine learning model.",
+    "What are common signs of overfitting in a machine learning model, and how can it be prevented?",
+    "How does a Support Vector Machine find the optimal separating hyperplane?",
+    "Compare the concepts of hard margin and soft margin in SVMs.",
+    "What are the different types of clustering algorithms, and in what scenarios are they most effective?",
+    "How does regularization help in reducing overfitting in neural networks?",
+    "Explain the concept of the bias-variance tradeoff in the context of model performance."
+  ],
+  "small_talk": [
+    "Hi there! How's your day going?",
+    "Thanks for helping me out!",
+    "Hey! What's up?",
+    "Good morning! Hope you're having a great day.",
+    "Hello! Just wanted to say hi."
+  ],
+  "hybrid": [
+    "Can you explain how a neural network works? Also, by the way, what's the best way to cook pasta?",
+    "What is overfitting in machine learning? And tell me, do you think cats are better than dogs?",
+    "How does gradient descent optimize a model? Also, I need to know the weather forecast for tomorrow.",
+    "Can you help me understand decision trees? By the way, what's the meaning of life?",
+    "What are the differences between supervised and unsupervised learning? Also, recommend some good movies.",
+    "Explain support vector machines in detail. And, can you give me some fashion tips?",
+    "How does backpropagation work in deep learning? Also, I want to know the latest sports scores.",
+    "What is feature scaling? By the way, what's the fastest way to learn a new language?"
+  ],
+  "multi_turn": [
+    [
+      "Can you explain the difference between supervised and unsupervised learning?",
+      "How does reinforcement learning fit into this?"
+    ],
+    [
+      "What does overfitting mean in machine learning?",
+      "And how can I prevent it in my models?"
+    ],
+    [
+      "Why is the bias-variance tradeoff important?",
+      "Could you give an example of it in practice?"
+    ],
+    [
+      "Tell me about decision trees.",
+      "How do they handle overfitting, and did we discuss that earlier?"
+    ],
+    [
+      "What are the main types of neural networks?",
+      "Based on what we talked about before, how do CNNs differ from RNNs?"
+    ],
+    [
+      "Explain gradient descent briefly.",
+      "Also, can you remind me how it was used in our previous example?"
+    ],
+    [
+      "Why is your explanation so basic? I thought I knew this stuff.",
+      "Anyway, can you still help me understand how support vector machines work?"
+    ]
+  ]
+}
