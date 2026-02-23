@@ -24,7 +24,7 @@ class Context_Rewriter_Agent:
         if not user_history:
             return latest_query
         
-        # 将列表格式转换为字符串，与head_agent接口保持一致
+        # Convert list format to string (head_agent passes history as a list of dicts)
         if isinstance(user_history, list):
             history_str = "\n".join([
                 f"{msg['role']}: {msg['content']}" 

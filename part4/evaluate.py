@@ -318,7 +318,10 @@ if __name__ == "__main__":
     import sys
     from dotenv import load_dotenv
     load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
-    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    # Add part3/ to sys.path so 'agents' package can be found
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "part3"))
+    # Add part4/ to sys.path so generate_dataset can be imported from same folder
+    sys.path.insert(0, os.path.dirname(__file__))
     from openai import OpenAI
     from agents.head_agent import Head_Agent
     from generate_dataset import TestDatasetGenerator

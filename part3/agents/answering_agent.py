@@ -7,16 +7,16 @@ from openai import OpenAI
 class Answering_Agent:
     def __init__(self, openai_client) -> None:
         """
-        openai_client: 已经初始化好的 OpenAI(api_key=...) 对象，不用自己再初始化
+        openai_client: A pre-initialized OpenAI(api_key=...) instance.
         """
         self.client = openai_client
 
     def generate_response(self, query, docs, conv_history=None, k=5):
         """
-        query: 用户问题字符串
-        docs: QueryAgent 返回的文档列表，每个文档有 page_content 和 metadata
-        conv_history: 对话历史，暂时可忽略或用于增强上下文
-        k: 使用的 top-k 文档数量
+        query: User query string
+        docs: List of documents returned by Query_Agent (each has page_content and metadata)
+        conv_history: Conversation history (optional, can be used to enhance context)
+        k: Number of top-k documents to use
         """
         docs = docs[:k]
 

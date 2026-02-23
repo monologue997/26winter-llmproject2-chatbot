@@ -1,4 +1,4 @@
-# Query Agent - Pinecone向量检索代理
+# Query Agent - Pinecone vector retrieval agent
 # Langchain API allowed for this agent
 # Model: gpt-4.1-nano
 
@@ -10,28 +10,28 @@ from langchain_openai import OpenAIEmbeddings
 
 class Query_Agent:
     """
-    Query_Agent负责从Pinecone向量数据库中检索相关文档
-    
-    主要职责：
-    1. 初始化Pinecone向量存储和OpenAI embeddings
-    2. 根据用户查询检索最相关的文档
-    3. 可选：设置系统提示词
-    4. 可选：从响应中提取特定动作
+    Query_Agent retrieves relevant documents from the Pinecone vector database.
+
+    Responsibilities:
+    1. Initialize the Pinecone vector store and OpenAI embeddings
+    2. Retrieve the most relevant documents for a given user query
+    3. Optional: set a system prompt for advanced retrieval behavior
+    4. Optional: extract specific actions from LLM responses
     """
-    
+
     def __init__(self, pinecone_index, openai_client, embeddings):
         """
-        初始化Query_Agent
-        
-        参数:
-            pinecone_index: Pinecone索引名称，例如 "machine-learning-textbook"
-            openai_client: OpenAI客户端实例（本代理中可能不直接使用，但保留接口一致性）
-            embeddings: OpenAI embeddings实例，或者在此方法内部创建
+        Initialize the Query_Agent.
+
+        Args:
+            pinecone_index: Pinecone index name, e.g. "ml-mp2"
+            openai_client: OpenAI client instance (kept for interface consistency)
+            embeddings: OpenAIEmbeddings instance, or None to create one internally
         """
         self.pinecone_index = pinecone_index
         self.openai_client = openai_client
-        
-        # 如果传入的embeddings是None，则自行创建
+
+        # Create embeddings internally if none are provided
         if embeddings is None:
             openai_key = os.getenv("OPENAI_API_KEY")
             self.embeddings = OpenAIEmbeddings(
@@ -40,73 +40,67 @@ class Query_Agent:
             )
         else:
             self.embeddings = embeddings
-        
-        # 初始化Pinecone向量存储
-        # 使用命名空间ns2500（根据原代码）
+
+        # Initialize Pinecone vector store using namespace ns2500
         self.vector_store = PineconeVectorStore.from_existing_index(
             index_name=self.pinecone_index,
             embedding=self.embeddings,
             namespace="ns2500"
         )
-        
-        # 可选的提示词，用于更高级的功能
+
+        # Optional prompt for advanced retrieval features
         self.prompt = None
-    
+
     def query_vector_store(self, query, k=5):
         """
-        从Pinecone向量存储中查询相关文档
-        
-        参数:
-            query: 用户的查询字符串
-            k: 返回的top-k相关文档数量，默认为5
-            
-        返回:
-            results: 文档列表，每个文档包含page_content和metadata
+        Query the Pinecone vector store for relevant documents.
+
+        Args:
+            query: User query string
+            k: Number of top-k documents to return (default 5)
+
+        Returns:
+            results: List of documents, each with page_content and metadata
         """
         results = self.vector_store.similarity_search(
             query=query,
             k=k
         )
         return results
-    
+
     def set_prompt(self, prompt):
         """
-        设置Query_Agent的系统提示词
-        
-        参数:
-            prompt: 系统提示词字符串
-            
-        说明:
-            这个方法允许在需要时动态调整代理的行为
-            例如，可以设置特定的检索策略或过滤条件
+        Set the system prompt for this agent.
+
+        Args:
+            prompt: Prompt string to guide retrieval behavior
+
+        Note:
+            This allows dynamic adjustment of the agent's behavior at runtime,
+            e.g. applying custom retrieval strategies or filters.
         """
         self.prompt = prompt
-    
+
     def extract_action(self, response, query=None):
         """
-        从响应中提取特定的动作或信息
-        
-        参数:
-            response: LLM或系统的响应
-            query: 可选的原始查询，用于上下文
-            
-        返回:
-            提取的动作或处理后的信息
-            
-        说明:
-            这个方法可以用于解析LLM响应，提取结构化信息
-            例如，判断是否需要重新检索、调整参数等
-            具体实现取决于你的agent架构设计
+        Extract a specific action or structured information from an LLM response.
+
+        Args:
+            response: LLM or system response
+            query: Optional original query for context
+
+        Returns:
+            Extracted action string, or None if no action found
+
+        Note:
+            This method can parse LLM output to extract structured information,
+            e.g. determining whether a re-retrieval or parameter adjustment is needed.
         """
-        # 示例实现：可以根据需要扩展
-        # 例如，检查响应中是否包含特定的关键词或指令
+        # Example: extract content after an "ACTION:" marker if present
         if self.prompt and "ACTION:" in str(response):
-            # 提取ACTION标记后的内容
             action_start = str(response).find("ACTION:") + 7
             action = str(response)[action_start:].strip().split('\n')[0]
             return action
-        
-        # 默认返回None表示没有特殊动作
+
+        # Default: no special action
         return None
-
-
