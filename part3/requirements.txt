@@ -2,4 +2,4 @@ streamlit
 openai
 langchain-openai
 langchain-pinecone
-pinecone-client
+pinecone
