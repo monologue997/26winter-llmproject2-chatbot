@@ -50,6 +50,7 @@ QUICK_PROMPTS = [
     ("🔀 Hybrid",          "You're an idiot, but explain what overfitting means."),
     ("↩️ Follow-up",       "How does the learning rate affect it?"),
     ("🚫 Irrelevant",      "What's a good recipe for pasta?"),
+    ("⚠️ Retrieval edge", "What is the difference between L1 and L2 regularization?"),
 ]
 
 with st.sidebar:
