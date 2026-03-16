@@ -39,22 +39,17 @@ head_agent = load_agent(openai_key, pinecone_key)
 # ----------------------------------------------------------------
 if "messages" not in st.session_state:
     st.session_state.messages = []
-if "draft_prompt" not in st.session_state:
-    st.session_state.draft_prompt = ""
-if "submitted_quick_prompt" not in st.session_state:
-    st.session_state.submitted_quick_prompt = ""
-
 # ----------------------------------------------------------------
-# Sidebar: controls + quick prompts
+# Sidebar: controls + example prompts for reference
 # ----------------------------------------------------------------
 QUICK_PROMPTS = [
-    ("💬 Greeting", "Hello! What can you help me with?"),
-    ("🚫 Offensive input", "You're stupid, just give me the answer."),
-    ("📚 On-topic (RAG)", "What is the difference between supervised and unsupervised learning?"),
-    ("⚡ On-topic (RAG)", "Explain gradient descent."),
-    ("🔀 Hybrid (mixed intent)", "You're an idiot, but explain what overfitting means."),
-    ("↩️ Follow-up", "How does the learning rate affect it?"),
-    ("🚫 Irrelevant", "What's a good recipe for pasta?"),
+    ("💬 Greeting",        "Hello! What can you help me with?"),
+    ("🚫 Offensive",       "You're stupid, just give me the answer."),
+    ("📚 On-topic",        "What is the difference between supervised and unsupervised learning?"),
+    ("📚 On-topic",        "Explain gradient descent."),
+    ("🔀 Hybrid",          "You're an idiot, but explain what overfitting means."),
+    ("↩️ Follow-up",       "How does the learning rate affect it?"),
+    ("🚫 Irrelevant",      "What's a good recipe for pasta?"),
 ]
 
 with st.sidebar:
@@ -65,12 +60,11 @@ with st.sidebar:
         st.rerun()
 
     st.divider()
-    st.subheader("Quick Prompts")
-    st.caption("Click to load into editor below")
+    st.subheader("Example Prompts")
+    st.caption("Copy and paste into the chat input below")
     for label, text in QUICK_PROMPTS:
-        if st.button(label, key=f"qp_{label}", use_container_width=True):
-            st.session_state.draft_prompt = text
-            st.rerun()
+        st.markdown(f"**{label}**")
+        st.code(text, language=None)
 
 # ----------------------------------------------------------------
 # Display existing chat messages
@@ -83,40 +77,11 @@ for message in st.session_state.messages:
                 st.caption(message["agent_path"])
 
 # ----------------------------------------------------------------
-# Quick-prompt editor: shows only when a quick prompt is loaded
+# Handle user input
 # ----------------------------------------------------------------
-if st.session_state.draft_prompt:
-    with st.container(border=True):
-        edited = st.text_area(
-            "Edit before sending:",
-            value=st.session_state.draft_prompt,
-            height=80,
-            key="draft_editor",
-            label_visibility="collapsed",
-        )
-        col_send, col_cancel, _ = st.columns([1, 1, 4])
-        with col_send:
-            if st.button("Send", type="primary"):
-                st.session_state.submitted_quick_prompt = edited
-                st.session_state.draft_prompt = ""
-                st.rerun()
-        with col_cancel:
-            if st.button("Cancel"):
-                st.session_state.draft_prompt = ""
-                st.rerun()
+prompt_to_send = st.chat_input("Ask a Machine Learning question...")
 
-# ----------------------------------------------------------------
-# Handle user input (normal chat input or quick-prompt send)
-# ----------------------------------------------------------------
-prompt_to_send = None
-
-if st.session_state.submitted_quick_prompt:
-    prompt_to_send = st.session_state.submitted_quick_prompt
-    st.session_state.submitted_quick_prompt = ""
-else:
-    prompt_to_send = st.chat_input("Ask a Machine Learning question...")
-
-if prompt := prompt_to_send:
+if prompt := prompt_to_send:  # noqa: SIM102
 
     # Display user message
     with st.chat_message("user"):
