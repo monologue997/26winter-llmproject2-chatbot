@@ -41,6 +41,8 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 if "draft_prompt" not in st.session_state:
     st.session_state.draft_prompt = ""
+if "submitted_quick_prompt" not in st.session_state:
+    st.session_state.submitted_quick_prompt = ""
 
 # ----------------------------------------------------------------
 # Sidebar: controls + quick prompts
@@ -83,8 +85,6 @@ for message in st.session_state.messages:
 # ----------------------------------------------------------------
 # Quick-prompt editor: shows only when a quick prompt is loaded
 # ----------------------------------------------------------------
-prompt_to_send = None
-
 if st.session_state.draft_prompt:
     with st.container(border=True):
         edited = st.text_area(
@@ -97,8 +97,9 @@ if st.session_state.draft_prompt:
         col_send, col_cancel, _ = st.columns([1, 1, 4])
         with col_send:
             if st.button("Send", type="primary"):
-                prompt_to_send = edited
+                st.session_state.submitted_quick_prompt = edited
                 st.session_state.draft_prompt = ""
+                st.rerun()
         with col_cancel:
             if st.button("Cancel"):
                 st.session_state.draft_prompt = ""
@@ -107,7 +108,12 @@ if st.session_state.draft_prompt:
 # ----------------------------------------------------------------
 # Handle user input (normal chat input or quick-prompt send)
 # ----------------------------------------------------------------
-if not prompt_to_send:
+prompt_to_send = None
+
+if st.session_state.submitted_quick_prompt:
+    prompt_to_send = st.session_state.submitted_quick_prompt
+    st.session_state.submitted_quick_prompt = ""
+else:
     prompt_to_send = st.chat_input("Ask a Machine Learning question...")
 
 if prompt := prompt_to_send:
